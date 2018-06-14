@@ -12,8 +12,8 @@
   * 微服务化
 
 ## Docker 安装
-   [Docker for Mac](https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-for-mac)
-   [Docker for Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+  * [Docker for Mac](https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-for-mac)
+  * [Docker for Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
 ## 镜像(image) vs 容器(container)
   1. 容器基于镜像创建，镜像提供了部署和运行容器所需的一切基础。若想启动容器，必须下载公共镜像或创建自己的镜像。
@@ -36,9 +36,11 @@
   5. 删除本地容器 $ docker rm 21daae74b641(CONTAINER ID)
 
 ## 容器化封装
+  以封装mbl service 为例：
   1. 在工程目录创建编辑 [Dockerfile](https://docs.docker.com/engine/reference/builder/)
-  2. 用编辑好的 Dockerfile 来构建镜像
-     $ docker build -f Dockerfile -t pier-mbl:1.0 --no-cache
+  2. 用编辑好的 Dockerfile 来构建镜像：
+     * 首先创建自己的基础镜像 $ docker build --rm -f dockerfiles/Dockerfile.base ./ -t p8h-backend-base:1.0 --no-cache
+     * 生成基础镜像后，build mbl的Dockerfile $ docker build -f dockerfiles/dev/mbl.Dockerfile ./ -t pier-mbl:1.0 --no-cache
   3. 运行镜像，并查看容器运行状态
      $ docker run --name=pier-mbl -p 8886:8886 -d pier-mbl:1.0
      $ docker ps -a (查看容器状态)
